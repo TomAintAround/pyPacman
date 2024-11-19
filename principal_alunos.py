@@ -7,42 +7,32 @@ def obtem_direecao(ponto1, ponto2):
     dir_y = math.sin(theta)
     return dir_x, dir_y
 
-
 def pacman_cima(estado_jogo):
     pass    
 
 def pacman_baixo(estado_jogo):
     pass
 
-
 def pacman_direita(estado_jogo):
     pass
-
 
 def pacman_esquerda(estado_jogo):
     pass
 
-
 def movimenta_pinky(estado_jogo):
     pass
 
-
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
-
 
 def movimenta_clyde(estado_jogo):
     scatter_distance_threshold = 3
     scatter_corner_index = 0
     pacman_pos = estado_jogo['pacman']['objeto'].pos()
     ghost_pos = estado_jogo['fantasmas'][CLYDE_OBJECT]['objeto'].pos()
-    
-    return 
-
 
 def movimenta_inky(estado_jogo):
     pass
-
 
 def movimenta_blinky(estado_jogo):
     pass
@@ -61,7 +51,6 @@ def atualiza_pontos(estado_jogo):
         estado_jogo['marcador'].goto(x + 10,y + 10)
         estado_jogo['marcador'].dot(2,'blue')
         update_board(estado_jogo)
-
 
 def atualiza_mapa(estado_jogo, x, y, elemento):
     index = offset((x,y))
@@ -91,12 +80,18 @@ def carrega_jogo(estado_jogo, nome_ficheiro):
             listaMundo[i] = int(listaMundo[i])
         
         estado_jogo["mapa"] = listaMundo
+    
+    FUNCOES_DIRECAO = {
+        3: movimenta_pinky,
+        4: movimenta_clyde,
+        5: movimenta_inky,
+        6: movimenta_blinky
+    }
 
 if __name__ == '__main__':
     try:
         funcoes_jogador = {'pacman_cima': pacman_cima, 'pacman_baixo': pacman_baixo, 'pacman_esquerda': pacman_esquerda, 'pacman_direita': pacman_direita, 'guarda_jogo' : guarda_jogo, 'carrega_jogo' : carrega_jogo}    
         funcoes_fantasmas = {BLINKY_OBJECT : movimenta_blinky, PINKY_OBJECT : movimenta_pinky, INKY_OBJECT : movimenta_inky, CLYDE_OBJECT : movimenta_clyde}
-
 
         nome_ficheiro = input('Pretende carregar um mapa (Enter para carregar o mapa default): ')
         if nome_ficheiro == '':

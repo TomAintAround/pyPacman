@@ -48,7 +48,7 @@ def movimenta_blinky(estado_jogo):
     pass
 
 def perdeu_jogo(estado_jogo):
-    pass
+    return False
 
 def atualiza_pontos(estado_jogo):
     x = estado_jogo['pacman']['objeto'].xcor() 
@@ -78,17 +78,19 @@ def actualiza_posicao_pacman_fantasma(estado_jogo):
         y = ghost['objeto'].ycor()
         atualiza_mapa(estado_jogo, x, y, ghost_id)
 
-
 def guarda_jogo(estado_jogo):
     actualiza_posicao_pacman_fantasma(estado_jogo)
     str_mapa = ''
     pass
 
 def carrega_jogo(estado_jogo, nome_ficheiro):
-    pass
-
-
-
+    with open(nome_ficheiro, 'r') as mapa:
+        listaMundo = mapa.read()
+        listaMundo = list(listaMundo.replace(",", "").replace(" ", "").replace("\n", ""))
+        for i in range(len(listaMundo)):
+            listaMundo[i] = int(listaMundo[i])
+        
+        estado_jogo["mapa"] = listaMundo
 
 if __name__ == '__main__':
     try:
@@ -100,7 +102,7 @@ if __name__ == '__main__':
         if nome_ficheiro == '':
             nome_ficheiro = 'mapa_inicial.txt'
         ##dicionario com as funcoes de movimento dos jogadores
-        
+
         #funções de inicio do jogo
         estado_jogo = init_state()
         carrega_jogo(estado_jogo, nome_ficheiro)    

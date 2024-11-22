@@ -8,16 +8,16 @@ def obtem_direecao(ponto1, ponto2):
     return dir_x, dir_y
 
 def pacman_cima(estado_jogo):
-    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[1]
+    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[0]
 
 def pacman_baixo(estado_jogo):
-    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[2]
+    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[1]
 
 def pacman_direita(estado_jogo):
-    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
+    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[2]
 
 def pacman_esquerda(estado_jogo):
-    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[4]
+    estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
 
 def movimenta_pinky(estado_jogo):
     pass

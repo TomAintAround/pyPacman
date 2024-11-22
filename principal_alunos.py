@@ -76,8 +76,7 @@ def carrega_jogo(estado_jogo, nome_ficheiro):
     with open(nome_ficheiro, 'r') as mapa:
         listaMundo = mapa.read()
         listaMundo = list(listaMundo.replace(",", "").replace(" ", "").replace("\n", ""))
-        for i in range(len(listaMundo)):
-            listaMundo[i] = int(listaMundo[i])
+        listaMundo = [int(elemento) for elemento in listaMundo]
         
         estado_jogo["mapa"] = listaMundo
     

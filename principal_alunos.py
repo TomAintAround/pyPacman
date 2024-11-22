@@ -79,13 +79,6 @@ def carrega_jogo(estado_jogo, nome_ficheiro):
         listaMundo = [int(elemento) for elemento in listaMundo]
         
         estado_jogo["mapa"] = listaMundo
-    
-    FUNCOES_DIRECAO = {
-        3: movimenta_pinky,
-        4: movimenta_clyde,
-        5: movimenta_inky,
-        6: movimenta_blinky
-    }
 
 if __name__ == '__main__':
     try:

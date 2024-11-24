@@ -20,7 +20,37 @@ def pacman_esquerda(estado_jogo):
     estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
 
 def movimenta_pinky(estado_jogo):
-    pass
+    pacman = estado_jogo["pacman"]["objeto"]
+    xPacman = pacman.xcor()
+    yPacman = pacman.ycor()
+    coordenadasPacman = (xPacman, yPacman)
+
+    pinky = estado_jogo["fantasmas"][PINKY_OBJECT]["objeto"]
+    xPinky = pinky.xcor()
+    yPinky = pinky.ycor()
+    coordenadasPinky = (xPinky, yPinky)
+
+    dir_x, dir_y = obtem_direecao(coordenadasPacman, coordenadasPinky)
+    direcao = [dir_x, dir_y]
+    direcaoPositiva = [abs(elemento) for elemento in direcao]
+    indexMinDirecaoPositiva = direcaoPositiva.index(min(direcaoPositiva))
+    indexMaxDirecaoPositiva = direcaoPositiva.index(max(direcaoPositiva))
+    direcao[indexMinDirecaoPositiva] = 0
+    direcao[indexMaxDirecaoPositiva] = math.copysign(1, direcao[indexMaxDirecaoPositiva]) * PIXEIS_MOVIMENTO
+
+    if not movimento_valido((xPinky + direcao[0], yPinky + direcao[1]), estado_jogo):
+        direcao = [dir_x, dir_y]
+        direcao[indexMinDirecaoPositiva] = math.copysign(1, direcao[indexMinDirecaoPositiva]) * PIXEIS_MOVIMENTO
+        direcao[indexMaxDirecaoPositiva] = 0
+    else:
+        return tuple(direcao)
+
+    if not movimento_valido((xPinky + direcao[0], yPinky + direcao[1]), estado_jogo):
+        direcao = [dir_x, dir_y]
+        direcao[indexMinDirecaoPositiva] = - math.copysign(1, direcao[indexMinDirecaoPositiva]) * PIXEIS_MOVIMENTO
+        direcao[indexMaxDirecaoPositiva] = 0
+    else:
+        return tuple(direcao)
 
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])

@@ -139,7 +139,7 @@ def cria_pacman(x_pos_inicial, y_pos_inicial):
     pacman.shape('circle')
     pacman.shapesize(PACMAN_SIZE / DEFAULT_TURTLE_SIZE)
     pacman.fillcolor('yellow')
-    pacman.shape('images/pacman.gif')
+    pacman.shape(os.path.join('images', 'pacman.gif'))
     return pacman
 
 def cria_fantasmas(x_pos_inicial, y_pos_inicial, ghost_id):
@@ -155,7 +155,7 @@ def cria_fantasmas(x_pos_inicial, y_pos_inicial, ghost_id):
     fantasma.shape('circle')
     fantasma.shapesize(PACMAN_SIZE / DEFAULT_TURTLE_SIZE)
     fantasma.fillcolor(CORES_FANTASMAS[ghost_id])
-    fantasma.shape('images/%d.gif' % ghost_id)
+    fantasma.shape(os.path.join('images', '%d.gif' % ghost_id))
     return fantasma
 
 
@@ -180,9 +180,9 @@ def cria_janela():
     window.setup(width = LARGURA_JANELA,height = ALTURA_JANELA, startx=370,starty=0)
     window.tracer(0)
     print(os.getcwd())
-    window.register_shape('images/pacman.gif')
+    window.register_shape(os.path.join('images', 'pacman.gif'))
     for i in range(3,7):
-        window.register_shape('images/%d.gif' % i)
+        window.register_shape(os.path.join('images', '%d.gif' % i))
     return window
 
 def cria_quadro_resultados():

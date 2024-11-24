@@ -32,10 +32,10 @@ def movimenta_clyde(estado_jogo):
     ghost_pos = estado_jogo['fantasmas'][CLYDE_OBJECT]['objeto'].pos()
 
 def movimenta_inky(estado_jogo):
-    pass
+    return random.choice(DIRECOES_POSSIVEIS)
 
 def movimenta_blinky(estado_jogo):
-    pass
+    return random.choice(DIRECOES_POSSIVEIS)
 
 def perdeu_jogo(estado_jogo):
     return False

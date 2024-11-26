@@ -34,11 +34,10 @@ def aproximar(posicaoPacman, posicaoFantasma):
     
     melhorDirecao = (0, 0)
     menorDistancia = TAMANHO_CELULA ** 2 # não nenhuma distnância maior que esta
-    NOVAS_DIRECOES_POSSIVEIS = DIRECOES_POSSIVEIS[:].remove(direcao)
-    for novaDirecao in NOVAS_DIRECOES_POSSIVEIS:
-        novaPosticao = (posicaoFantasma[0] + novaDirecao[0], posicaoFantasma[1] + novaDirecao[1])
-        if movimento_valido(novaPosticao, estado_jogo):
-            distancia = calculate_distance(novaPosticao, posicaoPacman)
+    for novaDirecao in DIRECOES_POSSIVEIS:
+        novaPosicao = (posicaoFantasma[0] + novaDirecao[0], posicaoFantasma[1] + novaDirecao[1])
+        if movimento_valido(novaPosicao, estado_jogo):
+            distancia = calculate_distance(novaPosicao, posicaoPacman)
             if distancia < menorDistancia:
                 menorDistancia = distancia
                 melhorDirecao = novaDirecao
@@ -54,9 +53,15 @@ def calculate_distance(pos1, pos2):
 
 def movimenta_clyde(estado_jogo):
     scatter_distance_threshold = 3
-    scatter_corner_index = 0
-    pacman_pos = estado_jogo['pacman']['objeto'].pos()
-    ghost_pos = estado_jogo['fantasmas'][CLYDE_OBJECT]['objeto'].pos()
+    scatter_corner_index = (0, 0)
+    posicaoPacman = estado_jogo['pacman']['objeto'].pos()
+    posicaoClyde = estado_jogo['fantasmas'][CLYDE_OBJECT]['objeto'].pos()
+
+    distancia = calculate_distance(posicaoPacman, posicaoClyde)
+    if distancia > scatter_distance_threshold:
+        return aproximar(posicaoPacman, posicaoClyde)
+    else:
+        return aproximar(scatter_corner_index, posicaoClyde)
 
 def movimenta_inky(estado_jogo):
     return random.choice(DIRECOES_POSSIVEIS)

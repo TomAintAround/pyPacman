@@ -19,34 +19,35 @@ def pacman_direita(estado_jogo):
 def pacman_esquerda(estado_jogo):
     estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
 
-def aproximar(dir_x, dir_y, x, y):
-    direcao = [dir_x, dir_y]
-    direcaoPositiva = [abs(elemento) for elemento in direcao]
-    indexMinDirecaoPositiva = direcaoPositiva.index(min(direcaoPositiva))
-    indexMaxDirecaoPositiva = direcaoPositiva.index(max(direcaoPositiva))
-    direcao[indexMinDirecaoPositiva] = 0
-    direcao[indexMaxDirecaoPositiva] = math.copysign(1, direcao[indexMaxDirecaoPositiva]) * PIXEIS_MOVIMENTO
+def aproximar(posicaoPacman, posicaoFantasma):
+    direcao = list(obtem_direecao(posicaoPacman, posicaoFantasma))
 
-    if not movimento_valido((x + direcao[0], y + direcao[1]), estado_jogo):
-        direcao = [dir_x, dir_y]
-        direcao[indexMinDirecaoPositiva] = math.copysign(1, direcao[indexMinDirecaoPositiva]) * PIXEIS_MOVIMENTO
-        direcao[indexMaxDirecaoPositiva] = 0
+    if abs(direcao[0]) > abs(direcao[1]):
+        direcao[0] = PIXEIS_MOVIMENTO if direcao[0] > 0 else -PIXEIS_MOVIMENTO
+        direcao[1] = 0
     else:
-        return tuple(direcao)
-
-    if not movimento_valido((x + direcao[0], y + direcao[1]), estado_jogo):
-        direcao[indexMinDirecaoPositiva] *= -1
-    else:
-        return tuple(direcao)
+        direcao[0] = 0
+        direcao[1] = PIXEIS_MOVIMENTO if direcao[0] > 0 else -PIXEIS_MOVIMENTO
     
-    return tuple(direcao)
+    if movimento_valido((posicaoFantasma[0] + direcao[0], posicaoFantasma[1] + direcao[1]), estado_jogo):
+        return direcao
+    
+    melhorDirecao = (0, 0)
+    menorDistancia = TAMANHO_CELULA ** 2 # não nenhuma distnância maior que esta
+    NOVAS_DIRECOES_POSSIVEIS = DIRECOES_POSSIVEIS[:].remove(direcao)
+    for novaDirecao in NOVAS_DIRECOES_POSSIVEIS:
+        novaPosticao = (posicaoFantasma[0] + novaDirecao[0], posicaoFantasma[1] + novaDirecao[1])
+        if movimento_valido(novaPosticao, estado_jogo):
+            distancia = calculate_distance(novaPosticao, posicaoPacman)
+            if distancia < menorDistancia:
+                menorDistancia = distancia
+                melhorDirecao = novaDirecao
+    return melhorDirecao
 
 def movimenta_pinky(estado_jogo):
     pacman = estado_jogo["pacman"]["objeto"]
     pinky = estado_jogo["fantasmas"][PINKY_OBJECT]["objeto"]
-
-    dir_x, dir_y = obtem_direecao(pacman.pos(), pinky.pos())
-    return aproximar(dir_x, dir_y, pinky.xcor(), pinky.ycor())
+    return aproximar(pacman.pos(), pinky.pos())
 
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])

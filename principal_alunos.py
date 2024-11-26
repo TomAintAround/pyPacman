@@ -19,18 +19,7 @@ def pacman_direita(estado_jogo):
 def pacman_esquerda(estado_jogo):
     estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
 
-def movimenta_pinky(estado_jogo):
-    pacman = estado_jogo["pacman"]["objeto"]
-    xPacman = pacman.xcor()
-    yPacman = pacman.ycor()
-    coordenadasPacman = (xPacman, yPacman)
-
-    pinky = estado_jogo["fantasmas"][PINKY_OBJECT]["objeto"]
-    xPinky = pinky.xcor()
-    yPinky = pinky.ycor()
-    coordenadasPinky = (xPinky, yPinky)
-
-    dir_x, dir_y = obtem_direecao(coordenadasPacman, coordenadasPinky)
+def aproximar(dir_x, dir_y, x, y):
     direcao = [dir_x, dir_y]
     direcaoPositiva = [abs(elemento) for elemento in direcao]
     indexMinDirecaoPositiva = direcaoPositiva.index(min(direcaoPositiva))
@@ -38,19 +27,26 @@ def movimenta_pinky(estado_jogo):
     direcao[indexMinDirecaoPositiva] = 0
     direcao[indexMaxDirecaoPositiva] = math.copysign(1, direcao[indexMaxDirecaoPositiva]) * PIXEIS_MOVIMENTO
 
-    if not movimento_valido((xPinky + direcao[0], yPinky + direcao[1]), estado_jogo):
+    if not movimento_valido((x + direcao[0], y + direcao[1]), estado_jogo):
         direcao = [dir_x, dir_y]
         direcao[indexMinDirecaoPositiva] = math.copysign(1, direcao[indexMinDirecaoPositiva]) * PIXEIS_MOVIMENTO
         direcao[indexMaxDirecaoPositiva] = 0
     else:
         return tuple(direcao)
 
-    if not movimento_valido((xPinky + direcao[0], yPinky + direcao[1]), estado_jogo):
-        direcao = [dir_x, dir_y]
-        direcao[indexMinDirecaoPositiva] = - math.copysign(1, direcao[indexMinDirecaoPositiva]) * PIXEIS_MOVIMENTO
-        direcao[indexMaxDirecaoPositiva] = 0
+    if not movimento_valido((x + direcao[0], y + direcao[1]), estado_jogo):
+        direcao[indexMinDirecaoPositiva] *= -1
     else:
         return tuple(direcao)
+    
+    return tuple(direcao)
+
+def movimenta_pinky(estado_jogo):
+    pacman = estado_jogo["pacman"]["objeto"]
+    pinky = estado_jogo["fantasmas"][PINKY_OBJECT]["objeto"]
+
+    dir_x, dir_y = obtem_direecao(pacman.pos(), pinky.pos())
+    return aproximar(dir_x, dir_y, pinky.xcor(), pinky.ycor())
 
 def calculate_distance(pos1, pos2):
     return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])

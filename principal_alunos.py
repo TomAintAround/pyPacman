@@ -32,7 +32,7 @@ def aproximar(posicaoPacman, posicaoFantasma):
     if movimento_valido((posicaoFantasma[0] + direcao[0], posicaoFantasma[1] + direcao[1]), estado_jogo):
         return direcao
     
-    melhorDirecao = (0, 0)
+    melhorDirecao = random.choice(DIRECOES_POSSIVEIS)
     menorDistancia = TAMANHO_CELULA ** 2 # não nenhuma distnância maior que esta
     for novaDirecao in DIRECOES_POSSIVEIS:
         novaPosicao = (posicaoFantasma[0] + novaDirecao[0], posicaoFantasma[1] + novaDirecao[1])

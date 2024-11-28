@@ -115,7 +115,7 @@ def guarda_jogo(estado_jogo):
             str_mapa += str(linha).replace("[", "").replace("]", "").replace(" ", "") + ",\n"
         guardaJogo.write(str_mapa)
 
-def carrega_jogo(estado_jogo, nome_ficheiro = "mapa_incial.txt"):
+def carrega_jogo(estado_jogo, nome_ficheiro = "mapa_inicial.txt"):
     with open(nome_ficheiro, 'r') as mapa:
         listaMundo = mapa.read()
         listaMundo = list(listaMundo.replace(",", "").replace(" ", "").replace("\n", ""))

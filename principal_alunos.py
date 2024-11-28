@@ -70,6 +70,13 @@ def movimenta_blinky(estado_jogo):
     return random.choice(DIRECOES_POSSIVEIS)
 
 def perdeu_jogo(estado_jogo):
+    objetoPacman = estado_jogo["pacman"]["objeto"]
+
+    for ghost_id in range(3, 7):
+        objetoGhost = estado_jogo["fantasmas"][ghost_id]["objeto"]
+        if ha_colisao(objetoPacman, objetoGhost):
+            terminar_jogo(estado_jogo)
+            return True
     return False
 
 def atualiza_pontos(estado_jogo):

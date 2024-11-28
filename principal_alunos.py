@@ -109,7 +109,11 @@ def actualiza_posicao_pacman_fantasma(estado_jogo):
 def guarda_jogo(estado_jogo):
     actualiza_posicao_pacman_fantasma(estado_jogo)
     str_mapa = ''
-    pass
+    with open("save.txt", "w") as guardaJogo:
+        for i in range(0, len(estado_jogo["mapa"]), TAMANHO_CELULA):
+            linha = estado_jogo["mapa"][i:i + TAMANHO_CELULA]
+            str_mapa += str(linha).replace("[", "").replace("]", "").replace(" ", "") + ",\n"
+        guardaJogo.write(str_mapa)
 
 def carrega_jogo(estado_jogo, nome_ficheiro):
     with open(nome_ficheiro, 'r') as mapa:
@@ -133,6 +137,7 @@ if __name__ == '__main__':
         estado_jogo = init_state()
         carrega_jogo(estado_jogo, nome_ficheiro)    
         setup(estado_jogo, True, funcoes_jogador,funcoes_fantasmas)
+        estado_jogo["marcador"].penup()
         
         #inicia_jogo(estado_jogo)
         while not perdeu_jogo(estado_jogo):

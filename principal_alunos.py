@@ -48,17 +48,17 @@ def pacman_esquerda(estado_jogo):
     """    
     estado_jogo["pacman"]["direcao_atual"] = DIRECOES_POSSIVEIS[3]
 
-def aproximar(posicaoPacman, posicaoFantasma):
+def aproximar(posicaoDesejada, posicaoFantasma):
     """Retorna a melhor direção que o fantasma deve seguir para se aproximar do Pacman
 
     Args:
-        posicaoPacman: Coordenadas do Pacman
+        posicaoDesejada: Coordenadas da posição onde se quer chegar
         posicaoFantasma: Coordenadas do fantasma
 
     Returns:
         Melhor direção
     """    
-    direcao = list(obtem_direecao(posicaoPacman, posicaoFantasma))
+    direcao = list(obtem_direecao(posicaoDesejada, posicaoFantasma))
 
     if abs(direcao[0]) > abs(direcao[1]):
         direcao[0] = PIXEIS_MOVIMENTO if direcao[0] > 0 else -PIXEIS_MOVIMENTO
@@ -80,7 +80,7 @@ def aproximar(posicaoPacman, posicaoFantasma):
     for novaDirecao in DIRECOES_POSSIVEIS:
         novaPosicao = (posicaoFantasma[0] + novaDirecao[0], posicaoFantasma[1] + novaDirecao[1])
         if movimento_valido(novaPosicao, estado_jogo):
-            distancia = calculate_distance(novaPosicao, posicaoPacman)
+            distancia = calculate_distance(novaPosicao, posicaoDesejada)
             if distancia < menorDistancia:
                 menorDistancia = distancia
                 melhorDirecao = novaDirecao

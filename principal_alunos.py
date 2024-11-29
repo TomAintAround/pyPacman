@@ -187,7 +187,7 @@ def atualiza_pontos(estado_jogo):
         x, y = calcula_x_y_from_index(index)
         estado_jogo['marcador'].goto(x + 10,y + 10)
         estado_jogo['marcador'].dot(2,'blue')
-        update_board(estado_jogo)
+    update_board(estado_jogo)
 
 def atualiza_mapa(estado_jogo, x, y, elemento):
     """Atualiza um elemento do mapa com o valor do fantasma ou Pacman
@@ -242,8 +242,11 @@ def carrega_jogo(estado_jogo, nome_ficheiro = "mapa_inicial.txt"):
         listaMundo = mapa.read()
         listaMundo = list(listaMundo.replace(",", "").replace(" ", "").replace("\n", ""))
         listaMundo = [int(elemento) for elemento in listaMundo]
-        
         estado_jogo["mapa"] = listaMundo
+    
+    for i in range(len(estado_jogo["mapa"])):
+        if estado_jogo["mapa"][i] == 7:
+            estado_jogo["score"] += 1
 
 if __name__ == '__main__':
     try:

@@ -121,7 +121,7 @@ def movimenta_clyde(estado_jogo):
     Returns:
         Direção do Clyde
     """    
-    scatter_distance_threshold = 3
+    scatter_distance_threshold = 65
     scatter_corner_index = (0, 0)
     posicaoPacman = estado_jogo['pacman']['objeto'].pos()
     posicaoClyde = estado_jogo['fantasmas'][CLYDE_OBJECT]['objeto'].pos()

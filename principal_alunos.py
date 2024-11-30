@@ -244,6 +244,9 @@ def carrega_jogo(estado_jogo, nome_ficheiro = "mapa_inicial.txt"):
         listaMundo = [int(elemento) for elemento in listaMundo]
         estado_jogo["mapa"] = listaMundo
     
+    """
+    Restaura os pontos ganhos quando o jogo foi salvo
+    """
     for i in range(len(estado_jogo["mapa"])):
         if estado_jogo["mapa"][i] == 7:
             estado_jogo["score"] += 1
